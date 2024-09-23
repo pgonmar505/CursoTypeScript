@@ -1,0 +1,28 @@
+{
+  "name": "cursotypescript",
+  "version": "1.0.0",
+  "description": "Primeros pasos en TypeScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pgonmar505/CursoTypeScript.git"
+  },
+  "keywords": [
+    "TypeScript"
+  ],
+  "author": "pgonmar505",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/pgonmar505/CursoTypeScript/issues"
+  },
+  "homepage": "https://github.com/pgonmar505/CursoTypeScript#readme",
+  "devDependencies": {
+    "@types/node": "^22.5.5",
+    "nodemon": "^3.1.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
+  }
+}
