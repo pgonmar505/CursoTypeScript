@@ -103,7 +103,7 @@ empleado2 ={edad:18, fotocopia:14, nombre:"Juan",sueldo:14223}
 let empleado3:Empleado = {nombre:"Alberto", edad:13, sueldo:23543}
 console.log(empleado3.sueldo)
 
-//oerador ternario
+//operador ternario
 //condicion ? verdadero : falso
 
 console.log(tarea1.estado == "P" ? `La tarea ${tarea1.nombre} se encuentra en ejecucion`:`la tarea ${tarea1.nombre} aun no se ha ejecutado`)
@@ -126,12 +126,114 @@ switch(tarea1.estado){
         console.log("Tarea en proceso");
         break;
     default:
-        console.log("Otro estasdo o no tiene estado")
+        console.log("Otro estado o no tiene estado")
 }
+
+//try-catch
 
 try {
     let numero1:number = 1;
     console.log(numero1.toString())
 } catch (error) {
     console.log("Se ha producido un error al convertir un numero en string",error)
+}
+
+//Bucles
+
+let ListaTareas: Tarea[] = [
+    {
+        nombre: "Tarea 1",
+        estado: EstadoTarea.EnProceso,
+        prioridad: 15
+    },
+    {
+        nombre: "Tarea 2",
+        estado: EstadoTarea.Terminado,
+        prioridad: 12
+    },
+    {
+        nombre: "Tarea 3",
+        estado: EstadoTarea.Terminal,
+        prioridad: 11
+    }
+]
+
+//foreach
+
+ListaTareas.forEach((tarea0: Tarea, index: number) => {
+    console.log(`${index} - ${tarea0.nombre}`);
+});
+
+//for
+
+for (let index = 0; index < ListaTareas.length; index++) {
+    const tarea = ListaTareas[index];
+    console.log(`${index} - ${tarea0.nombre}`);
+}
+
+//forin suele ser para objetos
+
+/**for (const key in tarea0) {
+    if (Object.prototype.hasOwnProperty.call(tarea0, key)) {
+        const element = tarea0[key];
+        
+    }
+}*/
+
+//While
+
+while (tarea0.estado !== EstadoTarea.EnProceso) {
+    
+    if(tarea0.prioridad == 5){
+        tarea0.estado = EstadoTarea.Terminado
+        break;
+    } else{
+        tarea0.prioridad ++;
+    }
+}
+
+//do while (se ejecuta al menos una vez)
+
+do {
+    tarea0.prioridad ++;
+    tarea0.estado = EstadoTarea.Terminado
+} while (tarea0.estado !== EstadoTarea.Terminado);
+
+
+//asignacion multiple de variables
+
+let miTarea = {
+    titulo: "Mi Tarea",
+    estado: EstadoTarea.Terminado,
+    prioridad: 12
+}
+    //Declaracion en una sola linea
+let miTitulo = miTarea.titulo;
+let miEstado = miTarea.estado;
+let miPrioridad = miTarea.prioridad;
+
+    //Declaracion con factor de propagacion
+    //En asignacion de variables
+
+let {titulo: string, estado, prioridad} = miTarea;
+
+    //En listas
+
+let listaCompraLunes: string[] = ["Leche", "Patatas"];
+let listaCompraMartes: String[] = [...listaCompraLunes, "Pan", "Huevos"];
+let listaCompraMiercoles: string[] = ["Carne", "Pescado"];
+let listaCompraSemana = [...listaCompraLunes, ...listaCompraMiercoles];
+
+    //En objetos
+
+let estadoApp = {
+    usuario: "admin",
+    session: 3,
+    jwt: "bearer22233"
+}
+
+        //cambiar un valor por propagacion
+let nuevoEstado = {
+    ...estadoApp,
+    session: 4
 }
