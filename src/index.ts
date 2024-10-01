@@ -237,3 +237,128 @@ let nuevoEstado = {
     ...estadoApp,
     session: 4
 }
+
+//Funciones
+/**
+ * Funcion que muestra un saludo por consola
+ */
+function saludar() {
+    
+    let nombre = "Pedro";
+
+    console.log(`Hola ${nombre}`);
+
+}
+
+//Llamada a la funcion
+
+saludar();
+
+/**
+ *  Funcion que muestra un saludo por consola
+ * @param nombre de la persona a saludar
+ */
+function saludo(nombre: string) {
+    console.log(`Hola ${nombre}`);
+}
+
+const PERSONA = "Pacooo"
+saludo("Paco");
+saludo(PERSONA);
+
+
+function despedir(nombre: string ="Pepe") {
+    console.log(`Adios ${nombre}`);
+}
+
+despedir(); //Adios Pepe
+despedir("Alba"); //Adios Alba
+
+function despedidaOpcional (nombre?: string | undefined){
+    if (nombre) {
+        console.log(`Adios ${nombre}`)
+    } else{
+        console.log("Adios")
+    }
+}
+
+despedidaOpcional(); // Adios
+despedidaOpcional("Juanjo"); //Adios Juanjo
+
+function variosparams(nombre: string, apellidos?: string, edad: number = 10) {
+    console.log(`${nombre} ${apellidos} tiene ${edad} años`);
+}
+
+variosparams("Martin") //Martin tiene 10 años
+variosparams("Martin","San Jose") //Martin san jose tiene 10 años
+variosparams("Martin", undefined, 40)//Martin tiene 40 años
+
+function ejemploVariosTipos(a: string | number) {
+
+   if( typeof(a) === 'string'){
+
+        console.log("A es un string")
+   } else if(typeof(a)==='number'){
+        console.log("A es un numero")
+   }else{
+     console.log("A no es un string ni un number");
+     throw Error("Ano es un string ni un number")
+   }
+    
+}
+
+ejemploVariosTipos("hola");
+ejemploVariosTipos(3);
+
+// Función con return
+function ejemploreturn (nombre: string,apellido: string){
+    return `${nombre} ${apellido}`;
+}
+
+const nombreCompleto = ejemploreturn("Pedro", "Gonzalez")
+console.log(nombreCompleto);
+console.log(ejemploreturn("Peter", "Martin"))
+
+
+// Funciones anónimas: no se especifica un nombre.
+
+
+
+/**
+ * 
+ * @param nombres es una lista de nombre de string
+ */
+function ejemploMultiParam (...nombres: string[]){
+    nombres.forEach((nombre)  => {
+        console.log(nombre);
+    })
+}
+
+ejemploMultiParam("Paco","Juan");
+
+const lista = ["Alberto", "Jose", "Pepe"]
+ejemploMultiParam(...lista);
+
+function ejemploMultiLista (nombres: string[]){
+    nombres.forEach((nombre)  => {
+        console.log(nombre);
+    })
+}
+
+ejemploMultiLista(lista);
+
+/**
+ * La diferencia entre usar una función que reciba como parámetro un array es que esta función recibe como parámetro una referencia al objeto.
+ * En cambio, con una función rest param lo que recibe como parámetro es cada uno de los elementos de la lista de forma individual.
+*/
+
+/**
+ * Las funciones arrow son una sintaxis compacta de definir funciones en JavaScript y TypeScript.
+ * Proporcionan una forma más breve y clara de escribir funciones en comparación con la sintaxis tradicional, 
+ * lo que mejora la legibilidad y mantiene la seguridad de los tipos.
+ * 
+ * (param1, param2, ..., paramN) => {}
+ */
+
+let getDatosTarea = (tarea:Tarea):string => {return `La tarea denominada ${tarea.nombre} cuyo estado es ${tarea.estado} tiene una prioridad ${tarea.prioridad} `}
+console.log(getDatosTarea(tarea1));
