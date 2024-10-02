@@ -242,7 +242,7 @@ let nuevoEstado = {
 /**
  * Funcion que muestra un saludo por consola
  */
-function saludar() {
+function saludar():void{
     
     let nombre = "Pedro";
 
@@ -255,7 +255,7 @@ function saludar() {
 saludar();
 
 /**
- *  Funcion que muestra un saludo por consola
+ * Funcion que muestra un saludo por consola
  * @param nombre de la persona a saludar
  */
 function saludo(nombre: string) {
@@ -266,6 +266,7 @@ const PERSONA = "Pacooo"
 saludo("Paco");
 saludo(PERSONA);
 
+//Con parametro por defecto
 
 function despedir(nombre: string ="Pepe") {
     console.log(`Adios ${nombre}`);
@@ -273,6 +274,8 @@ function despedir(nombre: string ="Pepe") {
 
 despedir(); //Adios Pepe
 despedir("Alba"); //Adios Alba
+
+//Con parametro opcional
 
 function despedidaOpcional (nombre?: string | undefined){
     if (nombre) {
@@ -285,6 +288,8 @@ function despedidaOpcional (nombre?: string | undefined){
 despedidaOpcional(); // Adios
 despedidaOpcional("Juanjo"); //Adios Juanjo
 
+//Funcion con multiples parametros
+
 function variosparams(nombre: string, apellidos?: string, edad: number = 10) {
     console.log(`${nombre} ${apellidos} tiene ${edad} años`);
 }
@@ -295,10 +300,10 @@ variosparams("Martin", undefined, 40)//Martin tiene 40 años
 
 function ejemploVariosTipos(a: string | number) {
 
-   if( typeof(a) === 'string'){
+   if( typeof(a) == 'string'){
 
         console.log("A es un string")
-   } else if(typeof(a)==='number'){
+   } else if(typeof(a)=='number'){
         console.log("A es un numero")
    }else{
      console.log("A no es un string ni un number");
@@ -322,7 +327,9 @@ console.log(ejemploreturn("Peter", "Martin"))
 
 // Funciones anónimas: no se especifica un nombre.
 
+let fanonima = function () {console.log("Hola mundo")}
 
+fanonima();
 
 /**
  * 
@@ -346,6 +353,16 @@ function ejemploMultiLista (nombres: string[]){
 }
 
 ejemploMultiLista(lista);
+
+//funciones arrow
+
+//(valor1, valor2, valor3) => { }
+// funtion operar (valor:number, valor2:number, valor3:number){}
+
+let farrow = (tarea0:Tarea, indice:number) =>{ console.log(`${indice} - ${tarea0.nombre} `)}
+listaCompraLunes.forEach(fanonima);
+
+
 
 /**
  * La diferencia entre usar una función que reciba como parámetro un array es que esta función recibe como parámetro una referencia al objeto.
