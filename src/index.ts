@@ -1,3 +1,5 @@
+import { promises } from "dns";
+
 console.log("Hola Mundo"); //mostrar por consola
 
 /**var nombre:string = "hola";//definir variables
@@ -379,3 +381,37 @@ listaCompraLunes.forEach(fanonima);
 
 let getDatosTarea = (tarea:Tarea):string => {return `La tarea denominada ${tarea.nombre} cuyo estado es ${tarea.estado} tiene una prioridad ${tarea.prioridad} `}
 console.log(getDatosTarea(tarea1));
+
+/**
+ * Funciones CALLBACK
+ */
+
+let fsuma = function suma(a:number, b:number) {
+    return a+b;
+}
+
+let fresta = function resta(a:number, b:number) {
+    return a-b;
+}
+
+function  opera (x:number, y:number, funcion:(a:number, b:number)=>number) {
+    return funcion(x,y)
+}
+
+opera(1,2,fsuma); //suma 1 y 2 = 3
+opera(1,2,fresta); //resta 1 y 2 = -1
+
+
+// FUNCIONES ASINCRONAS
+
+async function asincrona(){
+    let suma: number = 0
+    for (let i = 0; i<1000; i++){
+        suma +=i;
+    } 
+    return suma;
+}
+
+asincrona().then((data:number) => {console.log(`El resultado de ejecutar async = ${data}`)});
+console.log(`Linea de codigo posterior a la llamada`);
+
