@@ -415,3 +415,195 @@ async function asincrona(){
 asincrona().then((data:number) => {console.log(`El resultado de ejecutar async = ${data}`)});
 console.log(`Linea de codigo posterior a la llamada`);
 
+/**
+ * Funciones CallBack
+ * Una función callback es una función que se pasa a otra función como parámetro y dentro de la misma es llamada.
+ * Hay que tener en cuenta que una función se trata como un objeto.
+ */
+
+//Ejemplo 1: 
+
+const funcionMuestra = function (){
+    console.log("CallBack desde función estándar");
+}
+
+setTimeout(funcionMuestra,100); // La función timeout llama a funciónMuestra después de 100ms
+
+// Ejemplo 2: paso de una función anónima
+setTimeout(function(){console.log("CallBack desde función anónima")},1000);
+
+// Ejemplo 3: paso de una función flecha
+
+setTimeout(()=>{console.log("CallBack desde función flecha")},500);
+
+
+// Ejemplo 4:
+
+let muestraDatos = function (a:string, b:number, c:string[]){
+    console.log(`Ejemplo 4 - ${a}`);
+}
+
+listaTareas.forEach(muestraDatos)
+
+listaTareas.forEach((valor:string,indice:number,datos:string[]) => {
+    console.log(`${valor}, mostrado desde función CallBack fecha`)
+})
+
+// Ejemplo 5: 
+
+let fsuma = function suma(a:number, b:number){
+    return a+b;
+}
+
+let fresta = function resta(a:number,b:number){
+    return a-b;
+}
+// En este ejemplo estamos definiendo que la función opera espera recibir como parámetro una función CallBack
+// Concretamente, estamos diciendo que la función como entrada tiene que tener dos parámetros y devolver un número
+// Cuando se llama a dicha función CallBack desde la función principal se le pasan dichos parámetros y se vuelve a operar con el resultado
+
+function opera (x:number,y:number,callbackfuntion:(a:number,b:number)=> number){
+    return callbackfuntion(x,y);
+}
+
+opera(2,3,fsuma);
+opera(2,3,fresta)
+
+
+
+/**
+ * Funciones asíncronas:
+ * 
+ * Toda función asíncrona debe devolver una promesa. ¿Qué es una promesa?
+ * Una promesa es una espectativa que sucederá en algún momento particular del futuro.
+ */
+
+/**
+ * En el siguiente ejemplo vamos a usar una función asíncrona para acceder a una API desde la que vamos a obtener un JSON.
+ * A continuación se indican algunas API públicas que se pueden consultar.
+ * 
+ * https://www.postman.com/cs-demo/public-rest-apis/folder/c89mnom/television
+ * http://universities.hipolabs.com/search?country=spain
+ * https://dog.ceo/api/breeds/image/random
+ */
+
+
+
+/**
+ * Funcion asíncrona que consulta una API que contiene un directorio de universidades de todo el mundo.
+ * @param pais pais sobre el que se quiere filtrar los resultados
+ * @returns devuelve un JSON.
+ */
+async function getUniversitiesAsync(pais:string) : Promise <JSON[]> {
+    let index:number = 0;
+    const apiURL:string = "http://universities.hipolabs.com/search?country=";
+
+    //Construimos la URL de la API a consultar concatenando el pais que se quiere filtrar
+    let url:string = `${apiURL}${pais}`;
+    
+    // Con la función fetch accedemos hacemos una petición GET y obtenemos los resultados. 
+    // Usamos await para indicar que hasta que no termine esta instrucción no se ejecuta la siguiente
+    let respuesta:Response = await fetch(url);
+    // Convertimos la respuesta de la petición GET en un archivo JSON
+    let datos:Promise<JSON[]> = await respuesta.json() as Promise<JSON[]>;
+    return datos
+}
+ 
+
+// Llamamos a la función asincrona y mostramos el JSON de las universidades existentes en Spain
+getUniversitiesAsync("Spain").then((data)=>{console.log(data[1])});
+
+// Como curiosidad, podéis observar que esta línea se ejecuta antes aún estando después de la llamada a la API. 
+// Esto ocurre porque la función getDataFromAPI es una función asíncrona y muestra los resultados en el momento que termina su ejecución.
+console.log("Linea posterior a funcion async")
+
+/**
+ * FUNCIONES GENERADORAS:
+ * Una función generadora es una función que se puede pausar y reanudar, y por lo tanto, nos puede devolver múltiples valores.
+ * Para poder declarar una función generadora es necesario añadir el * después de la palabra reservada function. 
+ * Observa que en lugar de llamar a return para devolver un valor, utilizamos yield.
+ * Fuente:https://lenguajejs.com/javascript/funciones/generadores/
+ */
+
+// Ejemplo 1: Función que itera elementos de un array y los devuelve
+
+function* fGenTareas (): Generator<Tarea>{
+
+    let tareas: Tarea[] = [... ListaTareas]
+
+    for(let i in tareas){
+        yield tareas[i];
+    }
+    // No es posible usar la función foreach porque al ser una función callback no se puede usar con yield.
+}
+
+// Preparamos nuestra función generadora
+const genTareas = fGenTareas();
+console.log(genTareas.next()); // Accedemos al primer valor del array
+
+// Podemos obtener todos los valores de nuestra función generadora usando el operador spread
+
+// const getAllTareas = [...fGenTareas()];
+// console.log(getAllTareas);
+
+function* fgeneradora2 (): Generator<string>{
+    yield "hola"
+    yield "Mundo"
+    yield "IES"
+}
+
+let llamadafgen2 = fgeneradora2();
+console.log(llamadafgen2.next); //Hola
+console.log(llamadafgen2.next); //Mundo
+console.log(llamadafgen2.next); //IES
+console.log(llamadafgen2.next); //IES
+
+//mezcla de funcion generadora y asincrona
+
+type webPage = {
+    Name: string,
+    Domain: string,
+    Description: string
+}
+
+
+//Mapear a arrays de objetos
+
+async function* obtenerDatos() : AsyncGenerator<webPage>{
+    let peticion = await fetch("https://haveibeenpwned.com/api/v2/breaches");
+    let datos: webPage[] = await peticion.json() as webPage[];
+
+    for (let index = 0; index < datos.length; index++) {
+        yield datos[index]
+    }
+    for (let index in datos) {
+        yield datos[index]
+    }
+
+    //foreach -> no puedo usar yield desde dentro de la funcion callback
+
+}
+
+let datosWebPage = obtenerDatos();
+
+datosWebPage.next().then(({value, done}) => {console.log(`${value.Name} - ${value.Description}`)});
+
+//Sobrecarga de funciones
+
+function saludarSobrecarga (nombre:string):string;
+function saludarSobrecarga (nombre:string, apellido:string):string ;
+function saludarSobrecarga (nombre:string, apellido:string, edad:string):string;
+
+function saludarSobrecarga (nombre:string, apellido?:string, edad?:string|number){
+    let saludo = `Hola ${nombre}`
+
+    if (apellido != undefined){
+        saludo = saludo + `${apellido}`
+    }
+    if(edad != undefined){
+        saludo = saludo + `${edad}`
+    }
+    return saludo;
+}
+
+saludarSobrecarga("Pedro");
