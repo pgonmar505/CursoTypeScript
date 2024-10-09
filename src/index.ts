@@ -600,62 +600,129 @@ function mostrarMensaje(mensaje: string, veces?: number): void {
 mostrarMensaje("Hola"); // "Hola"
 mostrarMensaje("Hola", 3); // "Hola" "Hola" "Hola"
 
-/***
- * PERSISTENCIA DE DATOS:
- * 
- *  1. LocalStorage: Almacena datos en el navegador que no se elminan automaticamente
- *  2. SessionStorage: Los datos persisten durante la sesión del navegador.
- *  3. Cookies: Almacenan los datos durante un tiempo determinado, es decir, los datos tienen una fecha de caducidad.
- *  Además, las cookies pertenencen a un ámbito.
- * 
- * Todos estos datos son accesibles desde las herramientas de desarrollo del navegador.
- */
 
-// 1. LOCALSTORAGE Y SESSIONSTORAGE
 
-function setDatosLocalStorage(key:string,value:string):void {
-    try {
-        localStorage.setItem(key,value);
-    } catch (error) {
-        console.error("LocalStorage no definido");
+//Ejercicio2
+
+function fEjer2(type:String = "SessionStorage", key:string, data:Tarea[]){
+
+    console.log("Dentro")
+
+    if(type == "session"){
+
+        sessionStorage.setItem(key, JSON.stringify(data));
+        console.log("Se ha usado el SessionStorage");
+
+    } else if (type == "local"){
+
+        localStorage.setItem(key, JSON.stringify(data));
+        console.log("Se ha usado el LocalStorage");
+
     }
 }
 
-function getDatosLocalStorage(key:string):string{
-    
-    try {
-        let dato:string | null = localStorage.getItem(key);
-        if (dato!=null){
-            return dato;
+
+
+//Ejercicio3
+
+let t1:Tarea = {
+    nombre: "Tarea1",
+    prioridad: 1,
+    estado: EstadoTarea.EnProceso 
+}
+
+let t2:Tarea = {
+    nombre: "Tarea2",
+    prioridad: 2,
+    estado: EstadoTarea.Pendiente
+}
+
+let t3:Tarea = {
+    nombre: "Tarea3",
+    prioridad: 3,
+    estado: EstadoTarea.Completada
+}
+
+let listaTarea:Tarea[] = [t1, t2, t3];
+
+fEjer2("session", "datos", listaTarea);
+fEjer2("local", "datos", listaTarea);
+
+
+
+//Ejercicio4
+
+function recuperarDatos(type: string = "session", key: string): string | null{
+    if (type == "session") {
+        return sessionStorage.getItem(key);
+    } else {
+        return localStorage.getItem(key);
+    }
+}
+
+
+
+//Ejercicio5
+
+let datosRecuperadosSession = recuperarDatos("session", "datos"); // Recuperar de SessionStorage
+console.log("Datos recuperados de SessionStorage: ", datosRecuperadosSession);
+
+let datosRecuperadosLocal = recuperarDatos("local", "datos"); // Recuperar de LocalStorage
+console.log("Datos recuperados de LocalStorage: ", datosRecuperadosLocal);
+
+
+
+//Ejercicio6
+
+function borrarDatos(type: string = "session", key: string) {
+    if (type === "session") {
+        sessionStorage.removeItem(key); // Eliminar el elemento específico de SessionStorage
+        console.log(`Datos eliminados de SessionStorage con la clave: ${key}`);
+    } else if (type === "local") {
+        localStorage.removeItem(key); // Eliminar el elemento específico de LocalStorage
+        console.log(`Datos eliminados de LocalStorage con la clave: ${key}`);
+    }
+}
+
+function borrarTodosDatos(type: string = "session") {
+    if (type === "session") {
+        while (sessionStorage.length > 0) {
+            let key = sessionStorage.key(0); // Obtiene la primera clave
+            if (key) {
+                sessionStorage.removeItem(key); // Elimina el primer elemento
+                console.log(`Eliminado: ${key} de SessionStorage`);
+            }
         }
-    } catch (error) {
-        console.error("LocalStorage no definido")
+        console.log("Todos los datos de SessionStorage han sido eliminados.");
+    } else if (type === "local") {
+        while (localStorage.length > 0) {
+            let key = localStorage.key(0); // Obtiene la primera clave
+            if (key) {
+                localStorage.removeItem(key); // Elimina el primer elemento
+                console.log(`Eliminado: ${key} de LocalStorage`);
+            }
+        }
+        console.log("Todos los datos de LocalStorage han sido eliminados.");
     }
-    throw new Error ("No se ha encontrado la key indicada");
-
 }
-//setDatosLocalStorage("nombre","JoseA");
-//console.log(getDatosLocalStorage("nombre"));
+
+borrarTodosDatos("sesion");
+borrarTodosDatos("local");
 
 
-// COOKIES
-/**
- * 3. COOKIES
- * Para gestionar las cookies del navegador importaremos un módulo en nuestro proyecto.
- * Concretamente, usaremos este: https://www.npmjs.com/package/js-cookie
- * Para importar el módulo: npm i @types/js-cookie js-cookie --save-dev
- * Una vez instalado el módulo lo importamos: import Cookies from 'js-cookie'
- * Los atributos que puede tener una cookie son:
- * - expires: define cuándo será la cookie borrada. Debe ser un número que indica los días que deben transcurrir desde la fecha de creación.
- * - path: ruta donde la cookie será visible
- * - domain: dominio donde la cookie será visible 
- * - secure: la información de la cookie se enviará de manera cifrada mediante HTTPS si se establece como true
- * - samesite (strict | lax): si se establece como strict no se admitirán cookies recibidas desde otros dominios, solo aquellas cookies generadas por el dominio indicado en la configuracion. 
- */
 
-  
+//Ejercicio7
 
-Cookies.set('name', 'value', {domain:'domain.example',expires:1,path:"/",sameSite:'Strict',secure:false})
-Cookies.get('name')
-Cookies.remove("name");
+Cookies.set('nombre', 'Pedro', {expires:7,path:"/",sameSite:'Strict',secure:false});
 
+Cookies.set('apellido', 'Gonzalez', {expires:2,path:"/",sameSite:'Strict',secure:false});
+
+Cookies.set('email', 'miCorreo@iescarrillo.es', {expires:4,path:"/",sameSite:'Strict',secure:false});
+
+Cookies.get('nombre');
+Cookies.get('apellido');
+Cookies.get('email');
+
+Cookies.remove("nombre");
+Cookies.remove("apellido");
+Cookies.remove("email");
