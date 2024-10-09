@@ -1,370 +1,358 @@
-import { promises } from "dns";
+import Cookies from 'js-cookie'
 
-console.log("Hola Mundo"); //mostrar por consola
+// Sintasis básica de TypeScript
 
-/**var nombre:string = "hola";//definir variables
-var numero:number = 1;//enteros y decimales
-var bool:boolean = true;
-var nulo:null //dato nulo
-var undef:undefined //valor aún no especificado*/
 
-var nombre:string = "Pedro"; //variable global
-let apellido:string = "Gonzalez"; // variable local
-const PI:number = 3.1415; //constantes en mayusculas; no la puedo cambiar durante el codigo
+/**
+ * En este archivo iremos añadiendo líneas de código 
+ * con la sintaxis básica de TypeScript para que nos
+ * sirva de guia y nos ayude en el futuro.
+ */
 
-//concatenar texto
-console.log("Hola Mundo" + " Pedro");
-console.log(nombre + " " + apellido);
-console.log(nombre, apellido);
-console.log(`Hola ${nombre}`); // inyectar contenido de una variable en un string; para angular
+// 1. Imprimir por consola
+// En TypeScript no es necesario acabar las líneas con ;
+console.log("Hola Mundo");
 
-//declarar varias variables en una linea
-let a:string, b:string, c:number
-a="texto";
-b="texto2";
-c=3;
+/** 
+ * 2. Tipos de Variables
+ * 
+ * var - variable global
+ * let - variable local
+ * const - constante
+*/
 
-let d:string = "hola", e:string = "pepe", f:number = 5 // inicializarla en la misma linea
+var nombre = "Jose"; // Variable global
+let email = "jose@gmail.com";
+const PI = "3.141592";
 
-//arrays
+//Formas de concatenar variables y texto
+console.log("Hola " + nombre);
+console.log(`¿Cuál es tu apellido ${nombre}`)
+console.log ("Que tengas un buen día", nombre)
+console.log (`El email de ${nombre} es ${email}`)
 
-let alumnosA:string[] = ["juan","pablo","david"]; //array de string
-let datos: (String | number | boolean)[] = ["hola", 2, true]; //array con varios tipos de datos
+/**
+ * 3. Tipos de datos
+ * En TypeScrip es muy recomendable indicar el tipo de dato
+ * que almacenará cada una de las variables y constantes.
+ * 
+ *  - string
+ *  - number: incluye tanto enteros como decimales
+ *  - boolean
+ *  - null
+ *  - undefined: variable cuyo valor no haya sido especificado.
+ *  - any: el valor de la variable puede ser de cualquier tipo
+ */
 
-//factor de propagacion (incluir un array en otro)
+var apellido1: string = "Jose";
+var edad: number = 18;
+var esMayorDeEdad: boolean = true;
+var curso; // Al no indicar ningún tipo TypeScript le asigna any
 
-let alumnos1:string[] = ["juan","pablo","david"];
-let alumnos2:string[] = ["juan","pablo","david"];
 
-let alumnos:string[] = [...alumnos1, ...alumnos2, "Pablito"];
-console.log(alumnos);
+// Instanciación de múltiples variables;
 
-//Objetos
+let a:string,b:boolean,c:number;
+a="A";
+b=true;
+c=2.5;
+
+
+
+
+// Array de datos
+
+let listaTareas : string [] = ["Tarea 1"," Tarea 2"," Tarea 3"];
+
+let valores: (string | number | boolean)[] = [3, 2.4, true, "ABC"];
+
+// Concatenación de arrays mediante factor de propagación
+
+let nuevaListaTareas : string[] = [...listaTareas, "Tarea 4"];
+console.log(nuevaListaTareas);
+
+
+/***
+ * Creación de un objeto compuesto por datos primitivos
+ */
+
 
 let misDatos = {
-    nombre: "Pedro",
-    apellidos: "Gonzalez",
-    edad: 29
+    nombre:"Jose Antonio",
+    apellido:"Rodriguez",
+    edad: 18 
 }
 
-let configuracion = {
-    version: "Es6",
-    versionCodigo: "1.0",
-    ...misDatos
+Object.keys('')
+//Propagación de la variable misDatos
+let misDatoProfesionales = {
+    ...misDatos,
+    profesion: "Docente"
 }
-configuracion.version;
+// Declaración y Asignación 1 a 1
 
-let propiedad1 = configuracion.version
-let propiedad2 = configuracion.versionCodigo
-console.log(`${propiedad1} ${propiedad2}`)
+let miNombre = misDatos.nombre;
+let miApellido = misDatos.apellido;
+let miEdad = misDatos.edad;
 
-//Enumerados
 
-enum EstadoTarea {"Terminal" = "Tl", "EnProceso" = "P", "Terminado" = "Td"}
 
-let estadoPendiente = EstadoTarea.EnProceso
 
-if(EstadoTarea.EnProceso == "P"){
+/**
+ * Enumerados : permite definir un conjunto de constantes bajo un identificador.
+ * Si imprimimos el valor de un valor del enumerado observaremos que 
+ * lo que almacena es el un valor numérico.
+ * 
+ *  */ 
 
-}
+enum EstadoTarea { "Pendiente", "EnProceso", "Completada"};
+let estado: EstadoTarea = EstadoTarea.Pendiente;
+console.log(`El valor del enumerado Pendiente es: ${estado}`);
 
-//Interfaces
+/**
+ * El enumerado está actuando como una tupla Key:Value.
+ * Por defecto la primera key es == a 0. Podemos también cambiar esto.
+ * Podemos establecer una clave para cada valor del enumerado:
+ *  */
+
+// enum EstadoTarea { "Pendiente" ="P", "EnProceso" ="E", "Completada"="C"};
+enum PosicionCarrera { "Primero" = 1, Segundo, Tercero};
+console.log (`Has quedado en la posición ${PosicionCarrera.Primero}`);
+
+
+/**
+ * Interfaces: describen la estructura de un objeto.
+ * Las interfaces contienen la definición de los métodos y propiedades
+ * de un objeto, pero no su implementación.
+ * Una interfaz puede extender de otra.
+ */
 
 interface Tarea {
-    nombre: string,
-    prioridad: number,
-    estado: EstadoTarea
-}
-
-let tarea1: Tarea = {nombre:"Tarea1", prioridad:2, estado:EstadoTarea.EnProceso}
-
-let tarea0 = {nombre:"Tarea2", prioridad:2, estado:EstadoTarea.Terminado} //Mal hecho porque no declara 
-                                                                    //que es tipo tarea y se come errores
-
-//tipos
-
-type Empleado ={
     nombre:string,
-    edad:number,
-    sueldo:number
+    estado:EstadoTarea,
+    prioridad:number
 }
 
-let empleado1:Empleado = {nombre:"Pedro", edad:29,sueldo:1234}
-console.log(empleado1.edad)
+let tarea1: Tarea = { 
+    nombre: "Tarea1", 
+    estado: EstadoTarea.Pendiente, 
+    prioridad: 1 
+};
 
-//combinar objetos
+console.log (tarea1);
+console.log (tarea1.nombre);
 
-type Administrador ={
-    fotocopia:number,
+
+/**
+ * Types: permite crear un tipo de dato personalizado a partir de tipos de datos primitivos
+ * Permiten crear una estructura de datos más compleja.
+ * En TypeScript podemos combiar dos tipos, como veremos a continuación.
+ */
+
+type Administrador = {
+    nombre: string;
+    isAdmin: boolean;
 }
 
-let empleado2: Empleado & Administrador;
+type Empleado = {
+    nombre: string;
+    salario: number;
+}
 
-empleado2 ={edad:18, fotocopia:14, nombre:"Juan",sueldo:14223}
+let empleado1: Empleado = {nombre:"Juan",salario:1500};
 
-let empleado3:Empleado = {nombre:"Alberto", edad:13, sueldo:23543}
-console.log(empleado3.sueldo)
-
-//operador ternario
-//condicion ? verdadero : falso
-
-console.log(tarea1.estado == "P" ? `La tarea ${tarea1.nombre} se encuentra en ejecucion`:`la tarea ${tarea1.nombre} aun no se ha ejecutado`)
+/* Intersección de datos: permite combinar dos o más tipos de datos en uno solo. 
+*/
+let empleado2 : Empleado & Administrador;
+empleado2 = {isAdmin:true,nombre:"Jose",salario:2000};
 
 
-//if-else
+/**
+ * Estructuras de control: operador ternario, if, switch
+ * Operador Ternario
+ * condición ? expr1 : expr2
+ * Si la condición es true, el operador retorna el valor de la expr1;
+ *  de lo contrario, devuelve el valor de expr2.
+ */  
 
-if(tarea1.estado == "P"){
-//codigo c1
-} else if (tarea1.estado == "Td"){
-//codigo c2
+console.log (empleado1.salario > 1500 ? `El empleado ${empleado1.nombre} es Senior`: `El empleado ${empleado1.nombre} es Junior` )
+
+
+
+/***
+ * Operadores de comparación:
+ * 
+ * == -> compara el valor de la variable
+ * === compara el valor de la variable + el tipo de datos
+ */
+let tarea3 : Tarea = {estado: EstadoTarea.EnProceso, nombre:"Tarea3", prioridad:3};
+
+
+// Estructura if-else: if (){} else if (){} else{}
+
+if (tarea3.estado == EstadoTarea.EnProceso && tarea3.prioridad === 1){
+    console.log(`La tarea ${tarea3.nombre} es de máxima prioridad`);
+}else if (tarea3.estado == EstadoTarea.Pendiente ){
+    console.log(`La tarea ${tarea3.nombre} aún no ha comenzado`);
 }else{
-//resto de casos
+    console.log(`El estado de la tarea ${tarea3.nombre} es  ${tarea3.estado}`);
 }
 
-//Switch
+// Estructura Switch: switch (valor){case: break; default: break;}
 
-switch(tarea1.estado){
-    case "P":
+switch (tarea3.estado) {
+    case EstadoTarea.Completada:
+        console.log("Tarea completada");
+        break;
+    case EstadoTarea.EnProceso:
         console.log("Tarea en proceso");
         break;
     default:
-        console.log("Otro estado o no tiene estado")
+        console.log("Tarea pendiente");
+        break;
 }
 
-//try-catch
+
+// Estructura Try - Catch : para capturar errores
 
 try {
-    let numero1:number = 1;
-    console.log(numero1.toString())
+    let numero:number = 3.14;
+    console.log(numero.toString());
 } catch (error) {
-    console.log("Se ha producido un error al convertir un numero en string",error)
+    console.log("Se ha producido el siguiente error", error);
 }
 
-//Bucles
 
-let ListaTareas: Tarea[] = [
-    {
-        nombre: "Tarea 1",
-        estado: EstadoTarea.EnProceso,
-        prioridad: 15
-    },
-    {
-        nombre: "Tarea 2",
-        estado: EstadoTarea.Terminado,
-        prioridad: 12
-    },
-    {
-        nombre: "Tarea 3",
-        estado: EstadoTarea.Terminal,
-        prioridad: 11
-    }
-]
+/**
+ * Estructura de repetición - Bucles : 
+ */
 
-//foreach
+let tarea2 : Tarea = {estado: EstadoTarea.Completada, nombre: "Tarea 2", prioridad: 0}
+let listadoTareas: Tarea[] = [tarea1,tarea2,tarea3]
 
-ListaTareas.forEach((tarea0: Tarea, index: number) => {
-    console.log(`${index} - ${tarea0.nombre}`);
+//FOREACH
+listadoTareas.forEach( 
+    (elemento,indice,arreglo) => {
+    console.log(indice,elemento.nombre,arreglo[indice].estado)
 });
 
-//for
+/** 
+ * FOR
+ * Cuando trabajamos con tipos de datos no funciona
+ * for (const tarea: Tarea in listadoTareas){}
+ */
 
-for (let index = 0; index < ListaTareas.length; index++) {
-    const tarea = ListaTareas[index];
-    console.log(`${index} - ${tarea0.nombre}`);
+// FOR CLÁSICO
+
+for (let index = 0; index < listaTareas.length ; index++){
+    const tarea = listaTareas[index];
+    console.log(tarea);
 }
 
-//forin suele ser para objetos
+// WHILE
 
-/**for (const key in tarea0) {
-    if (Object.prototype.hasOwnProperty.call(tarea0, key)) {
-        const element = tarea0[key];
-        
-    }
-}*/
-
-//While
-
-while (tarea0.estado !== EstadoTarea.EnProceso) {
-    
-    if(tarea0.prioridad == 5){
-        tarea0.estado = EstadoTarea.Terminado
-        break;
-    } else{
-        tarea0.prioridad ++;
-    }
+while (tarea1.estado != EstadoTarea.Completada){
+    console.log("Tarea no completada");
+    tarea1.estado = EstadoTarea.Completada;
 }
-
-//do while (se ejecuta al menos una vez)
 
 do {
-    tarea0.prioridad ++;
-    tarea0.estado = EstadoTarea.Terminado
-} while (tarea0.estado !== EstadoTarea.Terminado);
+    console.log (`El estado de la tarea ${tarea1.nombre} es ${tarea1.estado}`)
+}while(tarea1.estado != EstadoTarea.Completada);
 
 
-//asignacion multiple de variables
 
-let miTarea = {
-    titulo: "Mi Tarea",
-    estado: EstadoTarea.Terminado,
-    prioridad: 12
-}
-    //Declaracion en una sola linea
-let miTitulo = miTarea.titulo;
-let miEstado = miTarea.estado;
-let miPrioridad = miTarea.prioridad;
-
-    //Declaracion con factor de propagacion
-    //En asignacion de variables
-
-let {titulo: string, estado, prioridad} = miTarea;
-
-    //En listas
-
-let listaCompraLunes: string[] = ["Leche", "Patatas"];
-let listaCompraMartes: String[] = [...listaCompraLunes, "Pan", "Huevos"];
-let listaCompraMiercoles: string[] = ["Carne", "Pescado"];
-let listaCompraSemana = [...listaCompraLunes, ...listaCompraMiercoles];
-
-    //En objetos
-
-let estadoApp = {
-    usuario: "admin",
-    session: 3,
-    jwt: "bearer22233"
-}
-
-        //cambiar un valor por propagacion
-let nuevoEstado = {
-    ...estadoApp,
-    session: 4
-}
-
-//Funciones
-/**
- * Funcion que muestra un saludo por consola
- */
-function saludar():void{
-    
-    let nombre = "Pedro";
-
-    console.log(`Hola ${nombre}`);
-
-}
-
-//Llamada a la funcion
-
-saludar();
 
 /**
- * Funcion que muestra un saludo por consola
- * @param nombre de la persona a saludar
+ * Funciones: nos permitirá crear bloque de códigos reutilizables.
+ * 
+ * funtion name (nameParam: type): Type return{}
+ * 
  */
-function saludo(nombre: string) {
-    console.log(`Hola ${nombre}`);
+
+// Funciónes clásicas y documentación del código
+
+/**
+ * Muestra un saludo por consola a una persona
+ * @param nombre string nombre del usuario
+ * 
+ */
+function saludar (nombre:string):void{
+    console.log(`Hola ${nombre}, qué tal estas?`);
 }
 
-const PERSONA = "Pacooo"
-saludo("Paco");
-saludo(PERSONA);
+saludar("José Antonio");
 
-//Con parametro por defecto
+//Funciones con parámeros por defecto
 
-function despedir(nombre: string ="Pepe") {
-    console.log(`Adios ${nombre}`);
+function saludarDefault (nombre:string = "Jose"){
+    console.log(`Hola ${nombre}, qué tal estas?`);
+}
+saludarDefault();
+saludarDefault("Juan");
+
+
+//Funciones con parámeros opcionales
+
+function saludarOpcional (nombre?:string){
+    let nombreParam = nombre;
+    if(nombreParam == undefined){
+        nombreParam = "Nombre Defecto";
+    }
+    console.log(`Hola ${nombreParam}, qué tal estas?`);
+
 }
 
-despedir(); //Adios Pepe
-despedir("Alba"); //Adios Alba
+saludarOpcional();
 
-//Con parametro opcional
-
-function despedidaOpcional (nombre?: string | undefined){
-    if (nombre) {
-        console.log(`Adios ${nombre}`)
+// Funciones con parámetros de varios tipos
+function variosTipos (a: string | number){
+    if (typeof(a) == "string"){
+        console.log("a es un string");
     } else{
-        console.log("Adios")
+        console.log("a es un number");
     }
 }
+variosTipos(1);
 
-despedidaOpcional(); // Adios
-despedidaOpcional("Juanjo"); //Adios Juanjo
-
-//Funcion con multiples parametros
-
-function variosparams(nombre: string, apellidos?: string, edad: number = 10) {
-    console.log(`${nombre} ${apellidos} tiene ${edad} años`);
+// Función con retorno: return
+function suma (a:number,b:number): number{
+    return a+b;
 }
 
-variosparams("Martin") //Martin tiene 10 años
-variosparams("Martin","San Jose") //Martin san jose tiene 10 años
-variosparams("Martin", undefined, 40)//Martin tiene 40 años
+// Podemos almacenar directamente el valor devuelto de la función en una variable
+var resultadoSuma:number = suma(1,2);
 
-function ejemploVariosTipos(a: string | number) {
-
-   if( typeof(a) == 'string'){
-
-        console.log("A es un string")
-   } else if(typeof(a)=='number'){
-        console.log("A es un numero")
-   }else{
-     console.log("A no es un string ni un number");
-     throw Error("Ano es un string ni un number")
-   }
-    
-}
-
-ejemploVariosTipos("hola");
-ejemploVariosTipos(3);
-
-// Función con return
-function ejemploreturn (nombre: string,apellido: string){
-    return `${nombre} ${apellido}`;
-}
-
-const nombreCompleto = ejemploreturn("Pedro", "Gonzalez")
-console.log(nombreCompleto);
-console.log(ejemploreturn("Peter", "Martin"))
+console.log(resultadoSuma);
+console.log(suma(1,2));
 
 
 // Funciones anónimas: no se especifica un nombre.
-
-let fanonima = function () {console.log("Hola mundo")}
-
-fanonima();
+/**
+ * Suma dos valores
+ * @param valor1 primer valor
+ * @param valor2 segundo valor
+ * @returns devuelve la suma de valor1 y valor2
+ */
+const funcRestar = function (valor1:number, valor2:number): number {
+    return valor1 - valor2;
+}
 
 /**
- * 
- * @param nombres es una lista de nombre de string
+ * Funciones, rest parameters (parámetros rest)
+ * Permite definir funciones que tomen un número indeterminado de argumentos
  */
-function ejemploMultiParam (...nombres: string[]){
+function multiParam (...nombres: string[]):void{
     nombres.forEach((nombre)  => {
         console.log(nombre);
     })
 }
+// Llamada a función multiparámetros
+multiParam("Alex","Martin");
 
-ejemploMultiParam("Paco","Juan");
-
-const lista = ["Alberto", "Jose", "Pepe"]
-ejemploMultiParam(...lista);
-
-function ejemploMultiLista (nombres: string[]){
-    nombres.forEach((nombre)  => {
-        console.log(nombre);
-    })
-}
-
-ejemploMultiLista(lista);
-
-//funciones arrow
-
-//(valor1, valor2, valor3) => { }
-// funtion operar (valor:number, valor2:number, valor3:number){}
-
-let farrow = (tarea0:Tarea, indice:number) =>{ console.log(`${indice} - ${tarea0.nombre} `)}
-listaCompraLunes.forEach(fanonima);
-
-
+// A las funciones rest también se le puede pasar una lista de elementos
+let listaNombres:string[] = ["Leandro","Francisco"];
+multiParam(...listaNombres);
 
 /**
  * La diferencia entre usar una función que reciba como parámetro un array es que esta función recibe como parámetro una referencia al objeto.
@@ -376,44 +364,12 @@ listaCompraLunes.forEach(fanonima);
  * Proporcionan una forma más breve y clara de escribir funciones en comparación con la sintaxis tradicional, 
  * lo que mejora la legibilidad y mantiene la seguridad de los tipos.
  * 
- * (param1, param2, ..., paramN) => {}
+ * (param1, param2, ..., paramN): Type return => {}
  */
 
 let getDatosTarea = (tarea:Tarea):string => {return `La tarea denominada ${tarea.nombre} cuyo estado es ${tarea.estado} tiene una prioridad ${tarea.prioridad} `}
 console.log(getDatosTarea(tarea1));
 
-/**
- * Funciones CALLBACK
- */
-
-let fsuma = function suma(a:number, b:number) {
-    return a+b;
-}
-
-let fresta = function resta(a:number, b:number) {
-    return a-b;
-}
-
-function  opera (x:number, y:number, funcion:(a:number, b:number)=>number) {
-    return funcion(x,y)
-}
-
-opera(1,2,fsuma); //suma 1 y 2 = 3
-opera(1,2,fresta); //resta 1 y 2 = -1
-
-
-// FUNCIONES ASINCRONAS
-
-async function asincrona(){
-    let suma: number = 0
-    for (let i = 0; i<1000; i++){
-        suma +=i;
-    } 
-    return suma;
-}
-
-asincrona().then((data:number) => {console.log(`El resultado de ejecutar async = ${data}`)});
-console.log(`Linea de codigo posterior a la llamada`);
 
 /**
  * Funciones CallBack
@@ -529,7 +485,7 @@ console.log("Linea posterior a funcion async")
 
 function* fGenTareas (): Generator<Tarea>{
 
-    let tareas: Tarea[] = [... ListaTareas]
+    let tareas: Tarea[] = [... listadoTareas]
 
     for(let i in tareas){
         yield tareas[i];
@@ -546,64 +502,160 @@ console.log(genTareas.next()); // Accedemos al primer valor del array
 // const getAllTareas = [...fGenTareas()];
 // console.log(getAllTareas);
 
-function* fgeneradora2 (): Generator<string>{
-    yield "hola"
-    yield "Mundo"
-    yield "IES"
-}
 
-let llamadafgen2 = fgeneradora2();
-console.log(llamadafgen2.next); //Hola
-console.log(llamadafgen2.next); //Mundo
-console.log(llamadafgen2.next); //IES
-console.log(llamadafgen2.next); //IES
 
-//mezcla de funcion generadora y asincrona
+// EJEMPLO 2: función generadora y asíncrona que accede a una API y devuelve cada uno de los elementos del array JSON.
+/**
+ * Funcion generadora y asíncrona que devuelve páginas web que han sufrido alguna brecha de seguridad
+ */
 
-type webPage = {
-    Name: string,
+type Website = {
+    Name:string,
+    Title:string,
     Domain: string,
-    Description: string
+    Description:string
+}
+async function* generatorGetBreaches():AsyncGenerator<Website> {
+
+    let respuesta:Response = await fetch("https://haveibeenpwned.com/api/v2/breaches");
+    // Convertimos la respuesta de la petición GET en un archivo JSON
+    let datos: Website[]= await respuesta.json() as Website[]
+    
+    for(let i in datos){
+        yield datos[i]
+    }
+    
+    
 }
 
+const valoresUniversidades = generatorGetBreaches();
+valoresUniversidades.next().then(({value,done}) => {console.log(`${value.Name} - ${value.Description}  \n`); console.log(`Is the last element? ${done} \n`);});
+valoresUniversidades.next().then(({value,done}) => {console.log(`${value.Name} - ${value.Description} \n`); console.log(`Is the last element? ${done} \n`);});
 
-//Mapear a arrays de objetos
+/**
+ * Sobrecarga de funciones:
+ * La sobrecarga de funciones permite declarar varias versiones de una función con diferentes parámetros y tipos de retorno. 
+ * Cada versión de la función (o firma) se llama sobrecarga.
+ * 
+ * Para crear sobrecargas de funciones en TypeScript debemos hacer lo siguiente
+ * 1. Definir las firmas de las funciones sobrecargadas.
+ * 2. Proveer una única implementación de la función que maneje todas las combinaciones de parámetros.
+ * Fuente:  https://www.luisllamas.es/typescript-sobrecarga-de-funciones/
+*/
 
-async function* obtenerDatos() : AsyncGenerator<webPage>{
-    let peticion = await fetch("https://haveibeenpwned.com/api/v2/breaches");
-    let datos: webPage[] = await peticion.json() as webPage[];
+// Definición de sobrecargas
+// En este ejemplo, la función miFuncion tiene dos firmas: una que acepta un string y otra que acepta un number. 
+// La implementación de la función maneja ambas firmas.
 
-    for (let index = 0; index < datos.length; index++) {
-        yield datos[index]
+
+function funcionSobrecarga(param: string): string;
+function funcionSobrecarga(param: number): number;
+
+// Implementación de la función
+function funcionSobrecarga(param: string | number): string | number {
+    // hacer cosas
+
+    return "";
+}
+funcionSobrecarga(12);   // esto no da error
+funcionSobrecarga("12")  // esto no da error
+
+// Sobrecarga con diferentes tipos de parámetros.
+
+function funcionSobrecargaDiffParam(a: string, b: string): string;
+function funcionSobrecargaDiffParam(a: number, b: number): number;
+
+// Implementación de la función
+function funcionSobrecargaDiffParam(a: string | number, b: string | number): string | number {
+    if (typeof a === "string" && typeof b === "string") {
+        return a + b;
+    } else if (typeof a === "number" && typeof b === "number") {
+        return a + b;
     }
-    for (let index in datos) {
-        yield datos[index]
-    }
-
-    //foreach -> no puedo usar yield desde dentro de la funcion callback
-
+    throw new Error("Tipos de parámetros no coinciden");
 }
 
-let datosWebPage = obtenerDatos();
+console.log(funcionSobrecargaDiffParam("Hola, ", "mundo")); // "Hola, mundo"
+console.log(funcionSobrecargaDiffParam(5, 10)); // 15
+//console.log(funcionSobrecargaDiffParam("Hola", 10)); //ERROR
 
-datosWebPage.next().then(({value, done}) => {console.log(`${value.Name} - ${value.Description}`)});
+funcionSobrecarga(13)
 
-//Sobrecarga de funciones
+//Sobrecarga con diferentes cantidades de parámetros
+// Definición de sobrecargas
+function mostrarMensaje(mensaje: string): void;
+function mostrarMensaje(mensaje: string, veces: number): void;
 
-function saludarSobrecarga (nombre:string):string;
-function saludarSobrecarga (nombre:string, apellido:string):string ;
-function saludarSobrecarga (nombre:string, apellido:string, edad:string):string;
-
-function saludarSobrecarga (nombre:string, apellido?:string, edad?:string|number){
-    let saludo = `Hola ${nombre}`
-
-    if (apellido != undefined){
-        saludo = saludo + `${apellido}`
+// Implementación de la función
+function mostrarMensaje(mensaje: string, veces?: number): void {
+    if (veces === undefined) {
+        console.log(mensaje);
+    } else {
+        for (let i = 0; i < veces; i++) {
+            console.log(mensaje);
+        }
     }
-    if(edad != undefined){
-        saludo = saludo + `${edad}`
-    }
-    return saludo;
 }
 
-saludarSobrecarga("Pedro");
+mostrarMensaje("Hola"); // "Hola"
+mostrarMensaje("Hola", 3); // "Hola" "Hola" "Hola"
+
+/***
+ * PERSISTENCIA DE DATOS:
+ * 
+ *  1. LocalStorage: Almacena datos en el navegador que no se elminan automaticamente
+ *  2. SessionStorage: Los datos persisten durante la sesión del navegador.
+ *  3. Cookies: Almacenan los datos durante un tiempo determinado, es decir, los datos tienen una fecha de caducidad.
+ *  Además, las cookies pertenencen a un ámbito.
+ * 
+ * Todos estos datos son accesibles desde las herramientas de desarrollo del navegador.
+ */
+
+// 1. LOCALSTORAGE Y SESSIONSTORAGE
+
+function setDatosLocalStorage(key:string,value:string):void {
+    try {
+        localStorage.setItem(key,value);
+    } catch (error) {
+        console.error("LocalStorage no definido");
+    }
+}
+
+function getDatosLocalStorage(key:string):string{
+    
+    try {
+        let dato:string | null = localStorage.getItem(key);
+        if (dato!=null){
+            return dato;
+        }
+    } catch (error) {
+        console.error("LocalStorage no definido")
+    }
+    throw new Error ("No se ha encontrado la key indicada");
+
+}
+//setDatosLocalStorage("nombre","JoseA");
+//console.log(getDatosLocalStorage("nombre"));
+
+
+// COOKIES
+/**
+ * 3. COOKIES
+ * Para gestionar las cookies del navegador importaremos un módulo en nuestro proyecto.
+ * Concretamente, usaremos este: https://www.npmjs.com/package/js-cookie
+ * Para importar el módulo: npm i @types/js-cookie js-cookie --save-dev
+ * Una vez instalado el módulo lo importamos: import Cookies from 'js-cookie'
+ * Los atributos que puede tener una cookie son:
+ * - expires: define cuándo será la cookie borrada. Debe ser un número que indica los días que deben transcurrir desde la fecha de creación.
+ * - path: ruta donde la cookie será visible
+ * - domain: dominio donde la cookie será visible 
+ * - secure: la información de la cookie se enviará de manera cifrada mediante HTTPS si se establece como true
+ * - samesite (strict | lax): si se establece como strict no se admitirán cookies recibidas desde otros dominios, solo aquellas cookies generadas por el dominio indicado en la configuracion. 
+ */
+
+  
+
+Cookies.set('name', 'value', {domain:'domain.example',expires:1,path:"/",sameSite:'Strict',secure:false})
+Cookies.get('name')
+Cookies.remove("name");
+
