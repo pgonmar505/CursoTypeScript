@@ -766,4 +766,38 @@ btnNuevoContenido.addEventListener('click', (event)=>{
 
 
 
+
 console.log("----------------------------------Fin del ejercicio ------------------------------------")
+
+
+// Obtiene la referencia del elemento <ul> con el id "lista-de-tareas"
+let listaDeTareas = document.getElementById("lista-de-tareas") as HTMLUListElement;
+
+// Obtiene la referencia del botón con el atributo name "btn-agregar-tarea"
+let botonAgregarTarea = document.getElementsByName("btn-agregar-tarea")[0] as HTMLButtonElement;
+
+// Obtiene la referencia del campo de entrada (input) con el id "entrada-tarea"
+let entradaTarea = document.getElementById("entrada-tarea") as HTMLInputElement;
+
+botonAgregarTarea.addEventListener("click", (event) => {
+    // Obtiene el texto ingresado en el campo de entrada
+    const tareaTexto = entradaTarea.value;
+
+    // Verifica si el campo de entrada no está vacío
+    if (tareaTexto.trim() !== "") {
+        // Crea un nuevo elemento <li> en la lista de tareas
+        let nuevaTarea = document.createElement("li");
+
+        // Asigna el texto ingresado al nuevo <li>
+        nuevaTarea.innerText = tareaTexto;
+
+        // Añade el nuevo <li> a la lista de tareas existente en el DOM
+        listaDeTareas.appendChild(nuevaTarea);
+
+        // Limpia el campo de entrada para permitir agregar nuevas tareas
+        entradaTarea.value = "";
+    } else {
+        // Si el campo de entrada está vacío, muestra un mensaje en la consola
+        console.log("Por favor, ingresa una tarea válida");
+    }
+});
