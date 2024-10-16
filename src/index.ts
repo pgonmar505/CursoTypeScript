@@ -755,16 +755,13 @@ let nuevoElemento:HTMLLIElement = document.createElement("li");
 nuevoElemento.innerText = "Nuevo elemento";
 
 elementoOL.appendChild(nuevoElemento);
-nuevoElemento.setAttribute("style", "color:red", "test with bold")
+nuevoElemento.setAttribute("style", "color:red")
 
 //click mouseover
 btnNuevoContenido.addEventListener('click', (event)=>{
     // TODO
     console.log("Usuario hace click en el boton")
 })
-
-
-
 
 
 console.log("----------------------------------Fin del ejercicio ------------------------------------")
@@ -801,3 +798,17 @@ botonAgregarTarea.addEventListener("click", (event) => {
         console.log("Por favor, ingresa una tarea válida");
     }
 });
+
+
+//dos botones uno de añadir a final de la lista y el de eliminar el del final de la lista 
+//o el del elemento quee  coincida con el input
+//dp llamada a la funcion async  para meter datos de una api
+//removeventlistener y addveventlistener
+//recorrer un elemento hijos
+
+let elementoOl = document.getElementById("lista-contenidos") as HTMLOListElement;
+
+let primerElemento : HTMLLIElement = elementoOL.children[0] as HTMLLIElement
+
+console.log(elementoOl.children[0]); //delvuelve array de objetos
+
