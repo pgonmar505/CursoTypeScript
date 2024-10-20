@@ -5,35 +5,60 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Curso TypeScript IES Carrillo</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-   
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <style>
+        i[name="star-li"]{
+            color:rgb(209, 186, 11);
+        }
+        #p{
+            color:rgb(143, 19, 19);
+            font-weight: bold;
+        }
+        .centrado{
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <div class="cabecera-curso">
-        <h1 id="h1-hello"> Hola Mundo!</h1>
-        <p> El objetivo de este documento HTML es ejecutar todo nuestro código TypeScript que ha sido previamente transpilado a JavaScript e inyectado en este documento</p>
-    </div>
-    <div id="errores">
-        <p id="p-errores" class="p-errores"></p>
-    </div>
-    <div name="form-curso" class="form-curso">
-        <input type="text" id="input-contenido" placeholder="Introduzca aquí el contenido que desea añadir">
-        <button name="btn-add-content">Añadir un nuevo contenido</button>
-    </div>
-    <div class="cuerpo-curso">
-        <p> Los contenidos que vamos a tratar en este curso de TypeScript son:</p>
-        <ol id="lista-contenidos" class="lista-contenidos">
-            <li>Características del lenguaje.</li>
-            <li>Variables y tipos de datos.</li>
-            <li>Arrays.</li>
-            <li>Enumerados</li>
-            <li>Objetos.</li>
-            <li>Estructuras de control y repetición.</li>
-            <li>Funciones: clásicas, anónimas, tipo Lambda, sobrecarga de funciones, etc.</li>
-            <li>Acceso y manejo del DOM</li>
-            <li>Gestión eventos del DOM</li>
-            <li>Interfaces</li>
-            <li>Clases.</li>
-        </ol>
+    <div class="container">
+        <div class="cabecera-curso">
+            <h1 class="centrado"> Ejercicio II TypeScript</h1>
+            <p> El objetivo de esta práctica es el siguiente:</p>
+            <ol>
+                <li>Cada vez que el usuario pase el cursor por encima de una de las estrellas de los elemento de la lista esta cambiará su estado al estado opuesto. Para ello, es necesario añadirle la clase bi-star o bi-star-fill. Recuerda que el método classlist devuelve un array con cada clase de un elemento y mediante classlist.remove y classlist.toggle podemos añadir o eliminar valores al atributo class de un elemento HTML.</li>
+                <li>Además de lo indicado anteriormente, cuando un usuario haga clic en una de las estrellas cambiará su estado al estado opuesto</li>
+                <li>El botón "Añadir un nuevo contenido" añadirá un nuevo elemento a la lista de contenidos, siempre y cuando el texto introducido en el input sea diferente a vacío, de lo contrario, se mostrará un error.</li>
+                <li>El botón "Borrar contenido" eliminará el contenido de la lista cuyo texto sea igual al indicado en el input. De nuevo, si el valor del input es vacío se mostrará un error.</li>
+            </ol>
+            <p>En el siguiente enlace podéis ver un ejemplo de la aplicación funcionando: </p>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/W93344ug4Eo?si=pVU-6wnjZ-KHsKGN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div id="errores">
+            <p id="p-errores" class="p-errores"></p>
+        </div>
+        <div name="form-curso" class="form-curso">
+            <input type="text" id="input-contenido" placeholder="Introduzca aquí el contenido que desea añadir">
+            <button name="btn-add-content">Añadir un nuevo contenido</button>
+            <button id="btn-remove-content">Borrar contenido</button>
+        </div>
+        <div class="cuerpo-curso">
+            <p> Los contenidos que vamos a tratar en este curso de TypeScript son:</p>
+            <ol id="lista-contenidos" class="lista-contenidos">
+                <li><i name="star-li" class="bi bi-star"></i>Características del lenguaje.</li>
+                <li><i name="star-li" class="bi bi-star"></i>Variables y tipos de datos.</li>
+                <li><i name="star-li" class="bi bi-star"></i>Arrays.</li>
+                <li><i name="star-li" class="bi bi-star"></i>Enumerados</li>
+                <li><i name="star-li" class="bi bi-star"></i>Objetos.</li>
+                <li><i name="star-li" class="bi bi-star"></i>Estructuras de control y repetición.</li>
+                <li><i name="star-li" class="bi bi-star"></i>Funciones: clásicas, anónimas, tipo Lambda, sobrecarga de funciones, etc.</li>
+                <li><i name="star-li" class="bi bi-star"></i>Acceso y manejo del DOM</li>
+                <li><i name="star-li" class="bi bi-star"></i>Gestión eventos del DOM</li>
+                <li><i name="star-li" class="bi bi-star"></i>Interfaces</li>
+                <li><i name="star-li" class="bi bi-star"></i>Clases.</li>
+            </ol>
+        </div>
     </div>
     <script src='bundle.js'></script>
 </body>
