@@ -848,3 +848,67 @@ fasincrona.then((valor:Perro)=>{
 
 obtenerDatosWeb();
 
+class Persona {
+    private nombre: string;
+    apellidos: string;
+    readonly DNI:string;
+    edad: number=18;
+
+    constructor (nombre: string, apellidos: string, edad?: number){
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.DNI = dni;
+        if (edad == undefined){
+            this.edad = 0;
+        } else{
+            this.edad = edad;
+        }
+      
+    }
+
+    set setNombre(nombre: string){
+        this.nombre = nombre;
+    }
+
+    get getNombre() {
+        return this.nombre
+    }
+
+let persona1:Persona = new Persona("Pedro","Gonzalez","00000000T");
+
+persona.getNombre();
+
+getJSON():string{
+    return JSON.stringify(new Persona(this.nombre, this.apellido, this.DNI, this.edad));
+}
+
+getJSONToObject(json:string):Persona{
+    return JSON.parse(json) as Persona;
+}
+
+toTexto(){
+    consoole.log(`${this.nombre} - ${this.apellidos} - ${this.DNI} - ${this.edad}`);
+}
+
+
+class Empleado extends Persona{
+    salario:number;
+
+    constructor Empleado(nombre: string, apellidos: string, salario:number, edad?: number){
+        super(nombre, apellidos, dni, edad)
+        this.salario = salario;
+    }
+
+    toTexto(){
+        super.toTexto()
+        console.log(`${this.salario}`)
+    }
+}
+
+let empleado1:Empleado = new Empleado ("Juan"...)
+
+}
+
+
+import Persona from './models/Persona'
+import Empleado from './models/Empleado'
